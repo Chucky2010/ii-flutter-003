@@ -10,59 +10,65 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Mi App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(),
+      title: 'Cambio de Color',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: const ColorChangeScreen(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+class ColorChangeScreen extends StatefulWidget {
+  const ColorChangeScreen({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<ColorChangeScreen> createState() => _ColorChangeScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _ColorChangeScreenState extends State<ColorChangeScreen> {
+  Color _containerColor = Colors.blue;
+  final List<Color> _colors = [Colors.blue, Colors.red, Colors.green];
+  int _currentColorIndex = 0;
 
-  void _incrementCounter() {
+  void _changeColor() {
     setState(() {
-      _counter++;
+      _currentColorIndex = (_currentColorIndex + 1) % _colors.length;
+      _containerColor = _colors[_currentColorIndex];
+    });
+  }
+
+  void _changeColorBlanco() {
+    setState(() {
+      _containerColor = Colors.white;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Mi App'),
-      ),
+      appBar: AppBar(title: const Text('Cambio de Color')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              padding: const EdgeInsets.all(16.0),
-              color: Colors.blueAccent,
+              width: 300,
+              height: 300,
+              color: _containerColor,
+              alignment: Alignment.center,
               child: const Text(
-                'Hola, Flutter',
-                style: TextStyle(fontSize: 24, color: Colors.white),
+                '!Cambio de Color!',
+                style: TextStyle(fontSize: 18, color: Colors.white),
+                textAlign: TextAlign.center,
               ),
             ),
             const SizedBox(height: 20),
-            Text(
-              'Veces Presionado: $_counter',
-              style: const TextStyle(fontSize: 20, color: Colors.blue),
-            ),
-            SizedBox(height: 30),
-            const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _incrementCounter,
-              child: const Text('Presionar'),
+              onPressed: _changeColor,
+              child: const Text('Cambiar Color'),
+            ),
+            ElevatedButton(
+              onPressed: _changeColorBlanco,
+              child: const Text('Color a Blanco'),
             ),
           ],
         ),
