@@ -12,15 +12,28 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Mi App',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        primarySwatch: Colors.blue,
       ),
       home: const MyHomePage(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,26 +43,28 @@ class MyHomePage extends StatelessWidget {
       ),
       body: Center(
         child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            color: Colors.green,
-            padding: const EdgeInsets.all(20.0),
-            child: const Padding(
-              padding: EdgeInsets.all(20.0),
-              child:  Text(
-              'Hola, Flutter',
-              style: TextStyle(fontSize: 24),
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(16.0),
+              color: Colors.blueAccent,
+              child: const Text(
+                'Hola, Flutter',
+                style: TextStyle(fontSize: 24, color: Colors.white),
+              ),
             ),
-          ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              // Acción al presionar el botón
-            },
-            child: const Text('Toca aqui'),
-          ),
-        ],
+            const SizedBox(height: 20),
+            Text(
+              'Veces Presionado: $_counter',
+              style: const TextStyle(fontSize: 20, color: Colors.blue),
+            ),
+            SizedBox(height: 30),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _incrementCounter,
+              child: const Text('Presionar'),
+            ),
+          ],
         ),
       ),
     );
